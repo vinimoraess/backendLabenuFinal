@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "clear && echo \"Starting application... \"&& tsc && node ./build/index.js",
-    "dev": "clear && echo \"Starting application... \" ts-node-dev ./src/index.ts",
+    "dev": "clear && echo \"Starting application... \"&& ts-node-dev ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
