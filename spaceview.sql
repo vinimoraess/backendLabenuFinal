@@ -21,3 +21,7 @@ CREATE TABLE IF NOT EXISTS spaceview_tags (
     image_id VARCHAR(255) NOT NULL,
     FOREIGN KEY (image_id) REFERENCES spaceview_image(id)
 );
+
+SELECT * FROM spaceview_users;
+SELECT * FROM spaceview_image;
+DELETE FROM spaceview_users WHERE nickname = "vinivetetos";

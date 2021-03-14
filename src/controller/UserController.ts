@@ -1,5 +1,5 @@
 import { Request, Response} from "express"
-import { signupInputDTO } from "../business/entities/User";
+import { LoginInput, signupInputDTO } from "../business/entities/User";
 import { Authenticator } from "../business/services/authenticator";
 import { HashManager } from "../business/services/hashManager";
 import { IdGenerator } from "../business/services/idGenerator";
@@ -27,14 +27,39 @@ export class UserController {
                 password: req.body.password
             }
 
-            const token = await userBusiness.createUser(input)
-            res.status(200).send({
+            const token = await userBusiness.createUser (input)
+            res.status (200).send ({
                 message: "User created successfully !",
                 token
             })
         }
         catch(error){
-            res.status(error.statusCode || 400).send({
+            res.status (error.statusCode || 400).send ({
+                error: error.message
+            })
+        }
+    }
+
+    public login = async(
+        req: Request,
+        res: Response
+    ):Promise<void> =>{
+        try{
+            const loginData: LoginInput={
+                email: req.body.email,
+                nickname: req.body.nickname,
+                password: req.body.password
+            }
+
+            const token = await userBusiness.getUser (loginData)
+            
+            res.status (200).send ({
+                message: "User logged in",
+                token
+            })
+        }
+        catch(error){
+            res.status (error.statusCode).send ({
                 error: error.message
             })
         }
