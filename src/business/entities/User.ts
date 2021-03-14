@@ -20,7 +20,7 @@ export interface LoginInput {
 
 export interface signupInputDTO {
     name: string,
-    email: string,
     nickname: string,
+    email: string,
     password: string
 }
