@@ -36,4 +36,36 @@ export class ImageDataBase extends BaseDataBase {
             throw new CustomError(500, "An unexpected error ocurred")
         }
     }
+
+    public selectAllImages = async(
+        
+    ):Promise<Images> =>{
+        try{
+            const result = await BaseDataBase.connection
+            .select('*')
+            .from(ImageDataBase.tablename)
+
+            return ImageDataBase.toImageModel (result[0])
+        }
+        catch(error){
+            throw new CustomError(500, "An unexpected error ocurred")
+        }
+    }
+
+    public selectImageById = async(
+        id: string
+    ):Promise<Images> =>{
+        try{
+            const result = await BaseDataBase.connection
+            .select('*')
+            .from(ImageDataBase.tablename)
+            .where({id})
+
+            return ImageDataBase.toImageModel (result[0])
+        }
+        catch(error){
+            throw new CustomError(500, "An unexpected error ocurred")
+        }
+        
+    }
 }
