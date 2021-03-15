@@ -11,7 +11,7 @@ export class ImageBusiness {
         private authenticator: Authenticator,
         private imageDataBase: ImageDataBase,
         private idGenerator: IdGenerator,
-        private generateData: GenerateData,        
+        private generateData: GenerateData,
     ) {}
 
     public createImage = async(
@@ -43,5 +43,35 @@ export class ImageBusiness {
         }
 
         await this.imageDataBase.insertImage (imageData)
+    }
+
+    public getAllImages = async(
+        authorization: string
+    ):Promise<Images> => {
+
+        if (!authorization){
+            throw new CustomError (204, "You must inform authorization token in headers")
+        }
+
+        const result = await this.imageDataBase.selectAllImages ()
+        
+        return result
+    }
+
+    public getImageById = async(
+        id: string,
+        authorization: string
+    ):Promise<Images> =>{
+        if (!authorization){
+            throw new CustomError (204, "You must inform authorization token in headers")
+        }
+
+        if (!id){
+            throw new CustomError (204, "You must inform an id in params")
+        }
+
+        const result = await this.imageDataBase.selectImageById (id)
+
+        return result
     }
 }

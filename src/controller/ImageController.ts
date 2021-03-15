@@ -1,5 +1,5 @@
 import { Request, Response} from "express"
-import { inputImageDTo } from "../business/entities/Image";
+import { Images, inputImageDTo } from "../business/entities/Image";
 import { ImageBusiness } from "../business/ImageBusiness";
 import { Authenticator } from "../business/services/authenticator";
 import { IdGenerator } from "../business/services/idGenerator";
@@ -36,6 +36,42 @@ export class ImageController {
             res.status (200) .send ({
                 message: "Image created successfully"
             })
+        }
+        catch(error){
+            res.status (error.statusCode) .send({
+                error: error.message
+            })
+        }
+    }
+
+    public getAllImages = async(
+        req: Request,
+        res: Response
+    ):Promise<any> =>{
+        try{
+            const { authorization } = req.headers
+            const imageData = await imageBusiness.getAllImages (authorization as string)
+            
+            res.status (200) .send(imageData)
+        }
+        catch(error){
+            res.status (error.statusCode).send ({
+                error: error.message
+            })
+        }
+    }
+
+    public getImageById = async(
+        req: Request,
+        res: Response
+    ):Promise<any> =>{
+        try{
+            const { authorization } = req.headers
+            const { id } = req.params
+
+            const imageData = await imageBusiness.getImageById (id, authorization as string)
+
+            res.status (200) .send(imageData)
         }
         catch(error){
             res.status (error.statusCode) .send({
